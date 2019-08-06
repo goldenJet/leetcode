@@ -30,7 +30,10 @@ public class CommonTransactionalService {
     */
 //    @Transactional(propagation = Propagation.SUPPORTS)
 //    @Transactional(propagation = Propagation.MANDATORY)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    @Transactional(propagation = Propagation.REQUIRES_NEW)
+//    @Transactional(propagation = Propagation.NOT_SUPPORTED)
+//    @Transactional(propagation = Propagation.NEVER)
+    @Transactional(propagation = Propagation.NESTED)
     public void updateB(){
         Optional<Customer> customerOpt = customerRepository.findById(2);
         if (!customerOpt.isPresent()) return;
@@ -47,7 +50,10 @@ public class CommonTransactionalService {
     * @Date: 2019-08-05 20:56 
    */
 //    @Transactional(propagation = Propagation.SUPPORTS)
-   @Transactional(propagation = Propagation.REQUIRES_NEW)
+//   @Transactional(propagation = Propagation.REQUIRES_NEW)
+//   @Transactional(propagation = Propagation.NOT_SUPPORTED)
+//   @Transactional(propagation = Propagation.NEVER)
+   @Transactional(propagation = Propagation.NESTED)
     public void updateC(){
         Optional<Customer> customerOpt = customerRepository.findById(3);
         if (!customerOpt.isPresent()) return;

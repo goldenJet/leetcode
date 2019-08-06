@@ -37,6 +37,8 @@ public class TransactionalService {
 
         commonTransactionalService.updateB();
         commonTransactionalService.updateC();
+
+//        int a = 1/0;
     }
 
 }
