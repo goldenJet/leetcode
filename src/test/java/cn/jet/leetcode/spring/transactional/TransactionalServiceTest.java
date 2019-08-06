@@ -23,7 +23,7 @@ public class TransactionalServiceTest {
 
     @Test
     public void test() {
-        transactionalService.updateA();
+        transactionalService.updateD();
     }
 
 }
