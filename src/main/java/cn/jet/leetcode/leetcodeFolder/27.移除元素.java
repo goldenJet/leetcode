@@ -66,18 +66,16 @@ class Solution {
         int result = 0;
         if (nums.length == 0) return result;
         List<Integer> list = new ArrayList<>();
-        int listLength = 0;
         for (int i = 0; i < nums.length; i++) {
             if (nums[i] == val) {
                 list.add(i);
-                listLength++;
                 continue;
             }
             result++;
-            if (listLength != 0) {
+            if (list.size() != 0) {
                 nums[list.get(0)] = nums[i];
                 list.remove(0);
-                listLength--;
+                list.add(i);
             }
         }
         return result;
