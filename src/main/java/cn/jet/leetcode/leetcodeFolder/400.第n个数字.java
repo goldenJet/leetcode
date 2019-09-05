@@ -59,7 +59,7 @@ class Solution {
             for (int i = 0; i < s-1; i++) {
                 b += 9 * Math.pow(10, i);
             }
-            // 暴力破解
+            // 暴力破解，待优化
             while (r0 < n) {
                 b++;
                 r0 += s;
