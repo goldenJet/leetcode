@@ -33,6 +33,7 @@
 
 // @lc code=start
 class Solution {
+    // 思路：简单的方式就是两层for循环，但是空间复杂度达不到 O(k)，然后在网上找到了一个关于杨辉三角的数的计算公式，问题迎刃而解
     public List<Integer> getRow(int rowIndex) {
         List<Integer> result = new ArrayList<>();
         long temp = 1;
