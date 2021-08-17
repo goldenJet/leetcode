@@ -96,6 +96,7 @@ class Solution {
                     repeat = true;
                 }
             }
+            git remote https://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@github.com/goldenJet/leetcode.git
         }
         if (i == -1 && repeat) return true;
         if (i == -1 || j == -1) return false;
