@@ -74,94 +74,94 @@ class LRUCache {
 
     private final int MAX_CAPACITY = 3000;
 
-        private final int MIN_CAPACITY = 1;
+    private final int MIN_CAPACITY = 1;
 
-        private int count = 0;
+    private int count = 0;
 
-        private int capacity = 0;
+    private int capacity = 0;
 
-        private volatile int MAX_TERM = 0;
+    private volatile int MAX_TERM = 0;
 
-        private volatile int MIN_TERM_INDEX = 0;
+    private volatile int MIN_TERM_INDEX = 0;
 
-        private Node[] cache;
+    private Node[] cache;
 
-        class Node {
-            int key;
-            int value;
-            int term;
+    class Node {
+        int key;
+        int value;
+        int term;
+    }
+
+    public LRUCache(int capacity) {
+        if (capacity < MIN_CAPACITY) {
+            capacity = MIN_CAPACITY;
+        } else if (capacity > MAX_CAPACITY) {
+            capacity = MAX_CAPACITY;
         }
+        this.capacity = capacity;
+        cache = new Node[capacity];
+    }
 
-        public LRUCache(int capacity) {
-            if (capacity < MIN_CAPACITY) {
-                capacity = MIN_CAPACITY;
-            } else if (capacity > MAX_CAPACITY) {
-                capacity = MAX_CAPACITY;
-            }
-            this.capacity = capacity;
-            cache = new Node[capacity];
-        }
-
-        public int get (int key) {
-            if (cache == null) return -1;
-            for (int i = 0; i < count; i++) {
-                Node node = cache[i];
-                if (node == null) continue;
-                if (node.key == key) {
-                    MAX_TERM++;
-                    node.term = MAX_TERM;
-                    if (i == MIN_TERM_INDEX) {
-                        resetMinTerm(i);
-                    }
-                    return node.value;
+    public int get (int key) {
+        if (cache == null) return -1;
+        for (int i = 0; i < count; i++) {
+            Node node = cache[i];
+            if (node == null) continue;
+            if (node.key == key) {
+                MAX_TERM++;
+                node.term = MAX_TERM;
+                if (i == MIN_TERM_INDEX) {
+                    resetMinTerm(i);
                 }
+                return node.value;
             }
-            return -1;
         }
+        return -1;
+    }
 
-        public void put (int key, int value) {
-            if (cache == null) return;
-            for (int i = 0; i < count; i++) {
-                Node node = cache[i];
-                if (node == null) continue;
-                if (node.key == key) {
-                    MAX_TERM++;
-                    node.term = MAX_TERM;
-                    if (i == MIN_TERM_INDEX) {
-                        resetMinTerm(i);
-                    }
-                    node.value = value;
-                    return;
+    public void put (int key, int value) {
+        if (cache == null) return;
+        for (int i = 0; i < count; i++) {
+            Node node = cache[i];
+            if (node == null) continue;
+            if (node.key == key) {
+                MAX_TERM++;
+                node.term = MAX_TERM;
+                if (i == MIN_TERM_INDEX) {
+                    resetMinTerm(i);
                 }
-            }
-            Node node = new Node();
-            node.key = key;
-            node.value = value;
-            node.term = ++MAX_TERM;
-
-            if (count < capacity)  {
-                cache[count] = node;
-                count++;
-                MIN_TERM_INDEX = 0;
-            } else {
-                cache[MIN_TERM_INDEX] = node;
-                resetMinTerm(MIN_TERM_INDEX);
+                node.value = value;
+                return;
             }
         }
+        Node node = new Node();
+        node.key = key;
+        node.value = value;
+        node.term = ++MAX_TERM;
 
-        private void resetMinTerm(int skipIndex) {
-            int minIndexTemp = -1;
-            int minTermTemp = -1;
-            for (int i = 0; i < count; i++) {
-                Node node = cache[i];
-                if (node == null) continue;
-                if (i == skipIndex) continue;
-                if (minTermTemp != -1 && node.term > minTermTemp) continue;
-                minIndexTemp = i;
-                minTermTemp = node.term;
-            }
-            if (minIndexTemp != -1) MIN_TERM_INDEX = minIndexTemp;
+        if (count < capacity)  {
+            cache[count] = node;
+            count++;
+            MIN_TERM_INDEX = 0;
+        } else {
+            cache[MIN_TERM_INDEX] = node;
+            resetMinTerm(MIN_TERM_INDEX);
         }
+    }
+
+    private void resetMinTerm(int skipIndex) {
+        int minIndexTemp = -1;
+        int minTermTemp = -1;
+        for (int i = 0; i < count; i++) {
+            Node node = cache[i];
+            if (node == null) continue;
+            if (i == skipIndex) continue;
+            if (minTermTemp != -1 && node.term > minTermTemp) continue;
+            minIndexTemp = i;
+            minTermTemp = node.term;
+        }
+        if (minIndexTemp != -1) MIN_TERM_INDEX = minIndexTemp;
+    }
 }
 
 /**
